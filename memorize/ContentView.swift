@@ -10,38 +10,32 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         HStack{
-            VStack{
-                CardView(IsFaceUp: true)
-                CardView(IsFaceUp: true)
-                CardView(IsFaceUp: true)
-                CardView(IsFaceUp: true)
-            }
-            VStack{
-                CardView(IsFaceUp: true)
-                CardView(IsFaceUp: true)
-                CardView(IsFaceUp: true)
-                CardView(IsFaceUp: true)
-            }
+            CardView(IsFaceUp: false)
+            CardView(IsFaceUp: false)
+            CardView(IsFaceUp: false)
         }
         .foregroundColor(.gray)
         .padding()
     }
 struct CardView: View {
-    var IsFaceUp: Bool = false
+    @State var IsFaceUp = false
     
     var body: some View {
-        ZStack(content: {
+        ZStack{
+            let card = RoundedRectangle(cornerRadius: 10)
             if IsFaceUp{
-                    RoundedRectangle(cornerRadius: 10)
-                    .foregroundColor(.white)
-                RoundedRectangle(cornerRadius: 13).stroke(lineWidth: 7)
+                card.foregroundColor(.white)
+                card.stroke(lineWidth: 7)
                 Text("🐔").font(.largeTitle)
                 }
             else{
-                RoundedRectangle(cornerRadius: 10)
+                card.fill()
             }
             
-       })
+        }.onTapGesture {
+            IsFaceUp.toggle()
+            // pode ser escrito dessa outra forma: IsFaceUp =  !IsFaceUp
+        }
      }
   }
 }
