@@ -8,15 +8,52 @@
 import SwiftUI
 
 struct ContentView: View {
-    let mascotes: Array<String> = ["🐔","🦊","🐳","🐷"]
+    let mascotes: Array<String> = ["🐔","🦊","🐳","🐷","🦁", "🐶", "🎅🏻", "🦸🏻‍♂️",  "🐮", "🐲"]
+    @State var cardCount: Int = 4
+    
     var body: some View {
-        HStack{
-            ForEach(0..<4, id: \.self) {index in
-                CardView(content: mascotes[index])
-            }
+        VStack{
+            cards
+            cardCountAdjusters
         }
-        .foregroundColor(.green)
         .padding()
+    }
+    
+    var cardCountAdjusters: some View{
+        HStack{
+            cardAdd
+            Spacer()
+            cardRemover
+        }
+    }
+    
+    var cards: some View{
+        HStack{
+            ForEach(0..<cardCount, id: \.self) {index in
+                CardView(content: mascotes[index])
+                }.foregroundColor(.green)
+            }
+    }
+    
+    var cardAdd: some View{
+        Button(action:{
+            if cardCount < mascotes.count {
+                cardCount += 1
+            }
+        }, label: {
+            Image(systemName:"rectangle.stack.fill.badge.plus")
+        }).imageScale(.large).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+    }
+    
+    var cardRemover: some View{
+        Button(action:{
+            if cardCount > 1{
+                cardCount -= 1
+            }
+        }, label: {
+            Image(systemName:"rectangle.stack.badge.minus.fill")
+        }).imageScale(.large).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+
     }
 struct CardView: View {
     let content: String
